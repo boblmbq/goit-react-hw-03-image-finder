@@ -14,12 +14,13 @@ class Searchbar extends Component {
 
   onFormSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.input.trim().toLowerCase());
-
+    const { input } = this.state;
+    if (input.trim() === '')
+      return alert('Please enter the some text in input');
+    this.props.onSubmit(input.trim().toLowerCase());
   };
   render() {
     const { input } = this.state;
-
     return (
       <SearchbarStyled className="searchbar">
         <SearchForm onSubmit={this.onFormSubmit} className="form">

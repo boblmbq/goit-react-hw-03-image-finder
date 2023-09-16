@@ -7,20 +7,18 @@ export class App extends Component {
     queryInput: '',
   };
 
-  querySaving = input => {
-    if (input !== this.state.queryInput) {
-      // чи не буде так краще написати??
-      this.setState({
-        queryInput: input.trim(),
-      });
-    }
-  };
+
+  querySaving = input =>
+    this.setState({
+      queryInput: input.trim(),
+    });
 
   render() {
+    const { queryInput } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.querySaving} />
-        <ImageGallery />
+        <ImageGallery queryInput={queryInput} />
       </>
     );
   }

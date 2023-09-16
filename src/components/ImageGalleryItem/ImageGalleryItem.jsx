@@ -1,12 +1,15 @@
-import { ImageGalleryItemStyled } from "./ImageGalleryItem.styled";
+import { Img, Li } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = props => {
-    return (
-        <ImageGalleryItemStyled className="gallery-item">
-            item
-        {/* <img src="" alt="" /> */}
-      </ImageGalleryItemStyled>
-    );
-}
+const ImageGalleryItem = ({ allItems }) => {
+  return (
+    <>
+      {allItems.map(({ id, webformatURL, largeImageURL, tags }) => (
+        <Li className="gallery-item" key={id}>
+          <Img src={webformatURL} alt={tags} data-large-image={largeImageURL} />
+        </Li>
+      ))}
+    </>
+  );
+};
 
 export default ImageGalleryItem;
