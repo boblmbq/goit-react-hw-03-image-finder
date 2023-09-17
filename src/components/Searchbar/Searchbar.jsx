@@ -19,6 +19,7 @@ class Searchbar extends Component {
       return alert('Please enter the some text in input');
     this.props.onSubmit(input.trim().toLowerCase());
   };
+  
   render() {
     const { input } = this.state;
     return (
