@@ -8,24 +8,24 @@ export class App extends Component {
   state = {
     queryInput: '',
     page: 1,
-    items: null,
+    items: [],
     error: null,
     loadig: false,
+    loadMore: false,
   };
 
   async componentDidUpdate(_, prevState) {
-    const prevQuery = prevState.queryInput;
-    const nextQuery = this.state.queryInput;
+    const { queryInput: prevQuery, page: prevPage } = prevState;
+    const { queryInput: nextQuery, page: nextPage } = this.state;
 
-    if (prevQuery !== nextQuery) {
+    if (prevQuery !== nextQuery || prevPage !== nextPage) {
       this.setState({
         loading: true,
-        page: 1,
       });
-      this.querySaving(nextQuery);
       try {
-        const fetchedImages = await getImages(nextQuery);
-        this.itemsSaving(fetchedImages);
+        const fetchedImages = await getImages(nextQuery, nextPage);
+        const { hits, totalHits } = fetchedImages;
+        this.itemsAdding(hits, totalHits);
       } catch (error) {
         this.setState({
           error,
@@ -38,52 +38,36 @@ export class App extends Component {
     this.querySaving(input);
   };
 
-  itemsSaving = items => {
-    this.setState(prev => ({ items, loading: false, page: prev.page + 1 }));
-  };
-
-  itemsAdding = items => {
+  itemsAdding = (items, totalItems) => {
     this.setState(prev => ({
       items: [...prev.items, ...items],
       loading: false,
-      page: prev.page + 1,
+      loadMore: this.state.page < Math.ceil(totalItems / 12),
     }));
   };
 
   querySaving = input =>
     this.setState({
+      page: 1,
+      items: [],
+      loadMore: false,
       queryInput: input,
     });
 
-  onButtonClick = async () => {
-    this.setState(prev => {
-      return {
-        loading: true,
-      };
-    });
-    const { queryInput, page } = this.state;
-    try {
-      const fetchedImages = await getImages(queryInput, page);
-      this.itemsAdding(fetchedImages);
-    } catch (error) {
-      this.setState({
-        error,
-      });
-    }
+  onButtonClick = () => {
+    this.setState(prev => ({
+      page: prev.page + 1,
+    }));
   };
 
   render() {
-    const { items } = this.state;
+    const { items, loadMore } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
-        {!items && <h1>Enter your query</h1>}
-        {items && (
-          <>
-            <ImageGallery items={items} />
-            <Button onClick={this.onButtonClick} />
-          </>
-        )}
+        {items.length === 0 && <h1>Enter your query</h1>}
+        {items.length > 0 && <ImageGallery items={items} />}
+        {loadMore && <Button onClick={this.onButtonClick} />}
       </>
     );
   }

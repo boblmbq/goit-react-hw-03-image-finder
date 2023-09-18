@@ -15,5 +15,5 @@ export const getImages = async (query, page=1) => {
   const imgs = await BASE_URL.get(`?${params}&q=${query}&page=${page}`);
   const { data } = imgs;
 
-  return data.hits;
+  return data;
 };
