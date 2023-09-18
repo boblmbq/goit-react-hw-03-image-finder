@@ -9,18 +9,10 @@ class ImageGallery extends Component {
 
   render() {
     const { items } = this.props;
-    console.log(items);
     return (
       <ImageGalleryStyled className="gallery">
         {items.map(arr => {
-          return (
-            <ImageGalleryItem
-              key={arr.id}
-              alt={arr.tags}
-              smallImg={arr.webformatURL}
-              largeImg={arr.largeImageURL}
-            />
-          );
+          return <ImageGalleryItem key={arr.id} {...arr} />;
         })}
       </ImageGalleryStyled>
     );

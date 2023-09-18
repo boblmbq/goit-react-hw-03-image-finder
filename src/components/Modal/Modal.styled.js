@@ -9,14 +9,14 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.01);
-  z-index: 1200;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
-export const ModalStyled = styled.div`
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 24px);
+export const ImgWrapper = styled.div`
+  max-width: 65%;
+  max-height: auto;
   img{
-    width: 50%;
+    width: 100%;
+    object-fit: cover; 
   }
 `;

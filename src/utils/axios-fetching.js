@@ -11,7 +11,7 @@ const BASE_URL = axios.create({
   baseURL: `https://pixabay.com/api/`,
 });
 
-export const getImages = async (query = '', page = 1) => {
+export const getImages = async (query, page=1) => {
   const imgs = await BASE_URL.get(`?${params}&q=${query}&page=${page}`);
   const { data } = imgs;
 

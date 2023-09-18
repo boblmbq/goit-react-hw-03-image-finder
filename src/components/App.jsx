@@ -16,9 +16,11 @@ export class App extends Component {
   async componentDidUpdate(_, prevState) {
     const prevQuery = prevState.queryInput;
     const nextQuery = this.state.queryInput;
+
     if (prevQuery !== nextQuery) {
       this.setState({
         loading: true,
+        page: 1,
       });
       this.querySaving(nextQuery);
       try {
@@ -37,7 +39,15 @@ export class App extends Component {
   };
 
   itemsSaving = items => {
-    this.setState({ items, loading: false });
+    this.setState(prev => ({ items, loading: false, page: prev.page + 1 }));
+  };
+
+  itemsAdding = items => {
+    this.setState(prev => ({
+      items: [...prev.items, ...items],
+      loading: false,
+      page: prev.page + 1,
+    }));
   };
 
   querySaving = input =>
@@ -45,7 +55,22 @@ export class App extends Component {
       queryInput: input,
     });
 
-  onButtonClick = () => {};
+  onButtonClick = async () => {
+    this.setState(prev => {
+      return {
+        loading: true,
+      };
+    });
+    const { queryInput, page } = this.state;
+    try {
+      const fetchedImages = await getImages(queryInput, page);
+      this.itemsAdding(fetchedImages);
+    } catch (error) {
+      this.setState({
+        error,
+      });
+    }
+  };
 
   render() {
     const { items } = this.state;
@@ -56,7 +81,7 @@ export class App extends Component {
         {items && (
           <>
             <ImageGallery items={items} />
-            <Button onClick={this.onButtonClick} />{' '}
+            <Button onClick={this.onButtonClick} />
           </>
         )}
       </>

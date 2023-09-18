@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Overlay, ModalStyled } from './Modal.styled';
+import { Overlay,  ImgWrapper } from './Modal.styled';
 import { createPortal } from 'react-dom';
 const rootModal = document.querySelector('#modal');
 
@@ -8,11 +8,11 @@ class Modal extends Component {
     window.addEventListener('keyup', this.closeModal);
   }
   componentWillUnmount() {
-    window.removeEventListener("keyup", this.closeModal)
+    window.removeEventListener('keyup', this.closeModal);
   }
 
   closeModal = e => {
-    if (e.code === 'Escape') {
+    if (e.code === 'Escape' || e.currentTarget === e.target) {
       this.props.onLeave();
     }
   };
@@ -20,10 +20,10 @@ class Modal extends Component {
   render() {
     const { img, alt } = this.props;
     return createPortal(
-      <Overlay className="overlay">
-        <ModalStyled className="modal">
+      <Overlay onClick={this.closeModal} className="overlay">
+        <ImgWrapper className="modal">
           <img src={img} alt={alt} />
-        </ModalStyled>
+        </ImgWrapper>
       </Overlay>,
       rootModal
     );

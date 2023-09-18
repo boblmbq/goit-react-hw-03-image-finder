@@ -13,18 +13,18 @@ class ImageGalleryItem extends Component {
   };
 
   render() {
-    const { alt, smallImg, largeImg } = this.props;
+    const { tags, webformatURL, largeImageURL } = this.props;
     const { openModal } = this.state;
     return (
       <>
         <Li className="gallery-item">
           <Img
-            src={smallImg}
-            alt={alt}
-            onClick={() => this.onImgClick(largeImg, alt)}
+            src={webformatURL}
+            alt={tags}
+            onClick={() => this.onImgClick(largeImageURL, tags)}
           />
           {openModal && (
-            <Modal img={largeImg} alt={alt} onLeave={this.onImgClick} />
+            <Modal img={largeImageURL} alt={tags} onLeave={this.onImgClick} />
           )}
         </Li>
       </>
