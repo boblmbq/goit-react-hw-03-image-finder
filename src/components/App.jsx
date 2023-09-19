@@ -37,7 +37,12 @@ export class App extends Component {
   }
 
   onSubmit = input => {
-    this.querySaving(input);
+    this.setState({
+      page: 1,
+      items: [],
+      loadMore: false,
+      queryInput: input,
+    });
   };
 
   itemsAdding = (items, totalItems) => {
@@ -46,14 +51,6 @@ export class App extends Component {
       loadMore: this.state.page < Math.ceil(totalItems / 12),
     }));
   };
-
-  querySaving = input =>
-    this.setState({
-      page: 1,
-      items: [],
-      loadMore: false,
-      queryInput: input,
-    });
 
   onButtonClick = () => {
     this.setState(prev => ({

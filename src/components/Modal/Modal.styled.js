@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Overlay = styled.div`
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,8 +16,8 @@ export const Overlay = styled.div`
 export const ImgWrapper = styled.div`
   max-width: 65%;
   max-height: auto;
-  img{
+  img {
     width: 100%;
-    object-fit: cover; 
+    object-fit: cover;
   }
 `;

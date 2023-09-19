@@ -3,6 +3,8 @@ import { Overlay,  ImgWrapper } from './Modal.styled';
 import { createPortal } from 'react-dom';
 const rootModal = document.querySelector('#modal');
 
+console.log(rootModal)
+
 class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keyup', this.closeModal);
