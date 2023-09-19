@@ -30,6 +30,8 @@ export class App extends Component {
         this.setState({
           error,
         });
+      } finally {
+        this.setState({ loading: false });
       }
     }
   }
@@ -41,7 +43,6 @@ export class App extends Component {
   itemsAdding = (items, totalItems) => {
     this.setState(prev => ({
       items: [...prev.items, ...items],
-      loading: false,
       loadMore: this.state.page < Math.ceil(totalItems / 12),
     }));
   };
