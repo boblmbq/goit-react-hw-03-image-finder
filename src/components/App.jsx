@@ -65,8 +65,11 @@ export class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
-        {items.length === 0 && <h1>Enter your query</h1>}
-        {items.length > 0 && <ImageGallery items={items} />}
+        {items.length > 0 ? (
+          <ImageGallery items={items} />
+        ) : (
+          <h1>Enter your query</h1>
+        )}
         {loadMore && <Button onClick={this.onButtonClick} />}
       </>
     );
